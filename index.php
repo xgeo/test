@@ -1,6 +1,6 @@
 <?php
     /** Conexão com banco de dados */
-    $pdo = new \PDO("mysql:dbname=test_db;host=localhost;port=3307", "root");
+    $pdo = new \PDO("mysql:dbname=test_db;host=localhost;port=3306", "root", "@900360.");
 
     /** Consulta e retorno de dados */
     $listaUsuarios = [];
@@ -25,7 +25,13 @@
                 $SQL = "INSERT INTO users VALUES (null, ?, ?, ?)";
                 $stmt = $pdo->prepare($SQL);
                 $success = $stmt->execute(array_values($_POST));
-                var_dump($success);
+
+                if ($success) {
+                    header('location: index.php');
+                } else {
+                    echo "<h3 style='color: red;'>ERROR! NÃO SALVOU! AHAHAHAHAHA</h3>";
+                }
+
             } catch (\PDOException $e) {
                 var_dump($e->getMessage());
             }
